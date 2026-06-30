@@ -21,7 +21,7 @@ export default async function handler() {
     }
   }
 
-  await redis.set("races", all);
-
+  //await redis.set("races", all);
+　await redis.set("races", JSON.stringify(all));
   return new Response("OK");
 }
