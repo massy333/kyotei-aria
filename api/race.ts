@@ -21,10 +21,14 @@ export default async function handler(req: Request) {
     return new Response("No data", { status: 404 });
   }
 
-  // raw は string であるべき
-  const all = JSON.parse(raw as string);
+  // raw が string でない場合は強制的に string に変換
+  const text = typeof raw === "string" ? raw : JSON.stringify(raw);
 
-  const target = all.find((r: any) => r.jcd === jcd && r.race === Number(race));
+  const all = JSON.parse(text);
+
+  const target = all.find(
+    (r: any) => r.jcd === jcd && r.race === Number(race)
+  );
 
   if (!target) {
     return new Response("Race not found", { status: 404 });
